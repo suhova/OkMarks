@@ -2,11 +2,14 @@ package ok.pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static ok.pages.Helper.isElementPresent;
+import java.util.List;
+
+import static ok.pages.CardTransformer.wrapPost;
+import static ok.pages.PostWrapper.getPostByText;
 
 public class PostPage extends BasePage{
     private final By MENU_TOP = By.id("mainTopContentRow");
@@ -14,55 +17,38 @@ public class PostPage extends BasePage{
     private final By MENU_LEFT = By.id("hook_Block_MediaTopicDisplayTypeFilter");
     private final By ADD_POST = By.xpath(".//*[@id='hook_Block_PostingForm']//*[@class='pf-head_itx_a']");
     private final By WRITE = By.xpath(".//*[@data-module='postingForm/mediaText']");
-    private final By SUBMIT = By.xpath(".//*[@title='Поделиться']");
-    private final By POST = By.xpath(".//*[@tsid='userStatusShares']//*[@class='media-text_a']");
-    private final By ARROW = By.xpath(".//*[@class='ic12 ic12_arrow-down lp']");
-    private final By MARK = By.xpath(".//*[@class='mlr_top_ac']//*[@class='tico_img ic ic_bookmark-g']");
-
-
-    WebDriver driver;
+    private final By SUBMIT = By.xpath(".//*[@class='posting_f']//*[@class='posting_submit button-pro']");
 
     public PostPage(WebDriver driver) {
-        this.driver = driver;
+        super.driver = driver;
         check(driver);
     }
 
     @Override
     void check(WebDriver driver) {
-        Assert.assertTrue("Нет блока меню сверху",new WebDriverWait(driver, 10).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d){
-                return isElementPresent(MENU_TOP, driver);
-            }
-        }));
-        Assert.assertTrue("Нет блока нового поста",new WebDriverWait(driver, 3).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d){
-                return isElementPresent(NEW_POST, driver);
-            }
-        }));
-        Assert.assertTrue("Нет левого блока меню",new WebDriverWait(driver, 10).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d){
-                return isElementPresent(MENU_LEFT, driver);
-            }
-        }));
+        Assert.assertTrue("Не дождались блока меню сверху",
+                explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_TOP), 10, 500));
+        Assert.assertTrue("Не дождались блока нового поста",
+                explicitWait(ExpectedConditions.visibilityOfElementLocated(NEW_POST), 10, 500));
+        Assert.assertTrue("Не дождались блока меню",
+                explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }
 
-    public PostPage addPost(){
-        if(isElementPresent(ADD_POST, driver)) {
-            driver.findElement(ADD_POST).click();
-            driver.findElement(WRITE).sendKeys(":)");
-            driver.findElement(SUBMIT).click();
-        }
+    public PostPage addPost(String message){
+        Assert.assertTrue("Не найдено поля добавления нового поста", isElementPresent(ADD_POST));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", driver.findElement(ADD_POST));
+        Assert.assertTrue("Не найдено поля написать заметку", isElementPresent(WRITE));
+        driver.findElement(WRITE).sendKeys(message);
+        Assert.assertTrue("Не найдено кнопки добавления заметки", isElementPresent(SUBMIT));
+        driver.findElement(SUBMIT).click();
         return this;
     }
 
-    public PostPage addMark(){
-        if(isElementPresent(POST,driver)){
-            driver.findElement(POST).click();
-            driver.findElement(ARROW).click();
-            System.out.println(2);
-            driver.findElement(MARK).click();
-            System.out.println(3);
-        }
-        return this;
+    public PostWrapper getPostWrapperByText(String message){
+        By postsBy = By.xpath(".//*[@id='hook_Block_UserStatusesMRB']//*[@class='feed']");
+        Assert.assertTrue("Не найдено списка заметок", isElementPresent(postsBy));
+        List<PostWrapper> posts = wrapPost(driver.findElements(postsBy));
+        return  getPostByText(message,driver, posts);
     }
 }

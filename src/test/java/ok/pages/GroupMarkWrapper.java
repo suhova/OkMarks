@@ -1,14 +1,15 @@
 package ok.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class MarkWrapper {
-    private final WebElement cardMark;
+public class GroupMarkWrapper {
+    private WebElement cardMark;
 
-    public MarkWrapper(WebElement mark){
+    public GroupMarkWrapper(WebElement mark){
         this.cardMark = mark;
     }
 
@@ -19,8 +20,8 @@ public class MarkWrapper {
         cardMark.click();
     }
 
-    public static MarkWrapper checkMark(String name, List<MarkWrapper> marks) {
-        for(MarkWrapper card: marks){
+    public static GroupMarkWrapper getMarkByName(String name, List<GroupMarkWrapper> marks) {
+        for(GroupMarkWrapper card: marks){
             if (card.getName().contains(name)) {
                 return card;
             }
@@ -28,7 +29,8 @@ public class MarkWrapper {
         return null;
     }
 
-    public void deleteMark(){
+    public BookmarkPage deleteMark( WebDriver driver){
         cardMark.findElement(By.xpath(".//*[@title='Убрать из закладок']")).click();
+        return new BookmarkPage(driver);
     }
 }

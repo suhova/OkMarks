@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class Helper {
 
-    public static boolean isElementPresent(By by,WebDriver driver) {
+    public static boolean isElementPresent(By by, WebDriver driver) {
         try {
             driver.findElement(by);
             return true;

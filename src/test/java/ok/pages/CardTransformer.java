@@ -20,14 +20,38 @@ public class CardTransformer {
         return cardMenu;
     }
 
-    public static List<MarkWrapper> wrapMark(List<WebElement> elements){
+    public static List<GroupMarkWrapper> wrapMark(List<WebElement> elements){
         if (elements.isEmpty()) {
             return Collections.emptyList();
         }
-        List<MarkWrapper> cardMark = new ArrayList<>();
+        List<GroupMarkWrapper> cardMark = new ArrayList<>();
         for (WebElement card: elements) {
-            cardMark.add(new MarkWrapper(card));
+            cardMark.add(new GroupMarkWrapper(card));
         }
         return cardMark;
     }
+
+    public static List<GroupWrapper> wrapGroup(List<WebElement> elements){
+        if (elements.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<GroupWrapper> cardGroup = new ArrayList<>();
+        for (WebElement card: elements) {
+            cardGroup.add(new GroupWrapper(card));
+        }
+        return cardGroup;
+    }
+
+    public static List<PostWrapper> wrapPost(List<WebElement> elements){
+        if (elements.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<PostWrapper> cardPost = new ArrayList<>();
+        for (WebElement card: elements) {
+            cardPost.add(new PostWrapper(card));
+        }
+        return cardPost;
+    }
+
+
 }

@@ -1,25 +1,27 @@
 package ok.tests;
 
-import ok.pages.*;
-import org.junit.Assert;
-import org.openqa.selenium.Alert;
-        import org.openqa.selenium.By;
-        import org.openqa.selenium.NoAlertPresentException;
-        import org.openqa.selenium.NoSuchElementException;
-        import org.openqa.selenium.WebDriver;
+import ok.pages.LoginPage;
+import ok.pages.UserMainPage;
+import org.junit.After;
+import org.openqa.selenium.*;
 
-import java.util.List;
-
-import static ok.pages.BasePage.openMark;
-import static ok.pages.CardTransformer.wrapMark;
-import static ok.pages.CardTransformer.wrapMenu;
-import static ok.pages.MarkWrapper.checkMark;
-import static ok.pages.MenuWrapper.clickByName;
+import static org.junit.Assert.fail;
 
 public class TestBase {
-
+    private StringBuffer verificationErrors = new StringBuffer();
+    protected String baseUrl = "https://ok.ru/";
+    protected String login = "technopolisBot206";
+    protected String password = "technopolis16";
     protected WebDriver driver;
     private boolean acceptNextAlert = true;
+
+    protected UserMainPage login(){
+        driver.get(baseUrl + "/dk?st.cmd=anonymMain&st.layer.cmd=PopLayerClose");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.loginEnter(login);
+        loginPage.passwordEnter(password);
+       return loginPage.clickEnter();
+    }
 
     protected boolean isElementPresent(By by) {
         try {
@@ -52,6 +54,13 @@ public class TestBase {
             acceptNextAlert = true;
         }
     }
-
+    @After
+    public void tearDown() throws Exception {
+        driver.quit();
+        String verificationErrorString = verificationErrors.toString();
+        if (!"".equals(verificationErrorString)) {
+            fail(verificationErrorString);
+        }
+    }
 
 }
