@@ -16,8 +16,8 @@ public class BookmarkPage extends BasePage {
 
     private final By MENU_TOP = By.id("mainTopContentRow");
     private final By MENU_LEFT = By.id("hook_Block_BookmarksMenuRB");
-    private final By MAIN_BLOCK = By.id("listBlockPanelBookmarksPageRB");
-    private final By MARK_LIST = By.xpath(".//*[@class='bk_list bk_list__altgroup  bk_list__front']//*[@class='cardsList']");
+    private final By MAIN_BLOCK = By.id("mainContentContentColumn");
+  //  private final By MARK_LIST = By.xpath(".//*[@class='bk_list bk_list__altgroup  bk_list__front']//*[@class='cardsList']");
     private final By POSTS = By.xpath(".//*[@class='nav-side_i ']//*[contains(text(),'Заметки')]");
     private final By GROUPS = By.xpath(".//*[@class='nav-side_i ']//*[contains(text(),'Группы')]");
     private final By MARKS = By.xpath(".//*[@class='cardsList_li show-on-hover posR']");
@@ -32,8 +32,8 @@ public class BookmarkPage extends BasePage {
     void check(WebDriver driver) {
         Assert.assertTrue("Не дождались блока меню сверху",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_TOP), 10, 500));
-//        Assert.assertTrue("Не дождались основного блока закладок",
-    //            explicitWait(ExpectedConditions.visibilityOfElementLocated(MAIN_BLOCK), 10, 500));
+        Assert.assertTrue("Не дождались основного блока закладок",
+                explicitWait(ExpectedConditions.visibilityOfElementLocated(MAIN_BLOCK), 10, 500));
         Assert.assertTrue("Не дождались блока меню слева",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }

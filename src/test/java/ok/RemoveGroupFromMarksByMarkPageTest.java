@@ -5,7 +5,6 @@ import ok.tests.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -14,11 +13,9 @@ import static ok.pages.BasePage.openMark;
 
 public class RemoveGroupFromMarksByMarkPageTest extends TestBase {
     private String groupName;
-    private By MARKS;
 
     @Before
     public void setUp() throws Exception {
-        MARKS = By.xpath(".//*[@class='cardsList_li show-on-hover posR']");
         driver = new ChromeDriver();
         super.driver = driver;
         groupName = "Технополис OK";
