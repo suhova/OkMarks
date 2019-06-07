@@ -33,7 +33,7 @@ public class PostPage extends BasePage{
         Assert.assertTrue("Не дождались блока меню",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }
-
+    // Добавить новую заметку
     public PostPage addPost(String message){
         Assert.assertTrue("Не найдено поля добавления нового поста", isElementPresent(ADD_POST));
         JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -44,7 +44,7 @@ public class PostPage extends BasePage{
         driver.findElement(SUBMIT).click();
         return this;
     }
-
+    // Получить заметку по тексту
     public PostWrapper getPostWrapperByText(String message){
         By postsBy = By.xpath(".//*[@id='hook_Block_UserStatusesMRB']//*[@class='feed']");
         Assert.assertTrue("Не найдено списка заметок", isElementPresent(postsBy));

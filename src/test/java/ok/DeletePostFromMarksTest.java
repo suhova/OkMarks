@@ -5,6 +5,7 @@ import ok.pages.PostPage;
 import ok.pages.PostWrapper;
 import ok.pages.UserMainPage;
 import ok.tests.TestBase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 import static ok.pages.BasePage.openMark;
+import static ok.pages.BasePage.openMyPage;
 
 public class DeletePostFromMarksTest extends TestBase {
     private  String message;
@@ -41,16 +43,28 @@ public class DeletePostFromMarksTest extends TestBase {
         postWrapper.addMark(driver);
         //открыть закладки
         BookmarkPage bookMarkPage = openMark();
+        bookMarkPage.clickOnPostMarks();
         postWrapper = bookMarkPage.getPostWrapperByText(message);
-
         // проверка успешности добавления
         Assert.assertNotNull("ПОСТ НЕ БЫЛ ДОБАВЛЕН В ЗАКЛАДКИ",postWrapper);
 
         // удаление из закладок
         bookMarkPage = postWrapper.deleteMark(driver);
-
+        //обновляю страницу
+        driver.navigate().refresh();
         //проверка удаления поста из закладок
         postWrapper = bookMarkPage.getPostWrapperByText(message);
         Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК",postWrapper);
     }
+
+    @After
+    public void deletePost() {
+        //открываю заметки
+        UserMainPage userMainPage = openMyPage();
+        PostPage postPage = userMainPage.openPostPage();
+        //удаление добавленной заметки
+        PostWrapper postWrapper = postPage.getPostWrapperByText(message);
+        postWrapper.deletePost(driver);
+    }
+
 }

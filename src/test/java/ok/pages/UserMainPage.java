@@ -31,14 +31,14 @@ public class UserMainPage extends BasePage {
         Assert.assertTrue("Не дождались блока меню",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }
-
+    // Открыть закладки
     public PostPage openPostPage(){
         By MENU = By.xpath(".//*[@id='hook_Block_Navigation']//*[@class='nav-side_i  __with-ic']");
         List<MenuWrapper> menu = wrapMenu(driver.findElements(MENU));
         Assert.assertTrue("Нет такого элемента меню", clickByName("Заметки", menu));
         return new PostPage(driver);
     }
-
+    // Открыть группы
     public GroupsMainPage openGroupsMainPage(){
         By MENU = By.xpath(".//*[@id='hook_Block_Navigation']//*[@class='nav-side_i  __with-ic']");
         List<MenuWrapper> menu = wrapMenu(driver.findElements(MENU));

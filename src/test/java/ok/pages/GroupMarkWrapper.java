@@ -19,7 +19,7 @@ public class GroupMarkWrapper {
     public void click(){
         cardMark.click();
     }
-
+    //вернуть группу по названию
     public static GroupMarkWrapper getMarkByName(String name, List<GroupMarkWrapper> marks) {
         for(GroupMarkWrapper card: marks){
             if (card.getName().contains(name)) {
@@ -28,7 +28,7 @@ public class GroupMarkWrapper {
         }
         return null;
     }
-
+    //удалить группу из заметок
     public BookmarkPage deleteMark( WebDriver driver){
         cardMark.findElement(By.xpath(".//*[@title='Убрать из закладок']")).click();
         return new BookmarkPage(driver);

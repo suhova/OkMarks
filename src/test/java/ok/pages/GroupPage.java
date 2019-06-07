@@ -32,12 +32,13 @@ public class GroupPage extends BasePage{
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(NAVIGATION_TOOLBAR), 10, 500));
     }
 
+    //добавить группу в заметки
     public GroupPage addMark() {
         Assert.assertTrue("Нет поля добавления в закладки",isElementPresent(MARK));
         driver.findElement(MARK).click();
         return this;
     }
-
+    // проверить находится ли группа в закладках
     public boolean markStatus() {
         Assert.assertTrue("Нет поля добавления в закладки",isElementPresent(MARK));
         String status = driver.findElement(MARK).getText();

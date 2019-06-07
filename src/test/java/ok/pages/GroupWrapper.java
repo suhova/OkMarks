@@ -21,6 +21,7 @@ public class GroupWrapper {
         cardGroup.click();
     }
 
+    //получить группу по названию
     public static GroupWrapper getGroupByName(String name, List<GroupWrapper> groups) {
         for(GroupWrapper card: groups){
             if (card.getName().contains(name)) {
@@ -29,6 +30,7 @@ public class GroupWrapper {
         }
         return null;
     }
+    //открыть группу
     public GroupPage openGroup(WebDriver driver){
         cardGroup.findElement(By.xpath(".//*[@class='photo']")).click();
         return new GroupPage(driver);

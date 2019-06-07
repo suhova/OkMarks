@@ -44,7 +44,7 @@ public class GroupsMainPage extends BasePage{
 
         return this;
     }
-
+    //открыть группу с нужным названием
     public GroupPage openGroupByName(String groupName){
         //ввод в поиск названия группы
         searchGroup(groupName);

@@ -42,11 +42,11 @@ public class DeletePostTest extends TestBase {
         postWrapper.addMark(driver);
         //открыть закладки
         BookmarkPage bookmarkPage = openMark();
+        bookmarkPage.clickOnPostMarks();
         postWrapper = bookmarkPage.getPostWrapperByText(message);
 
         // проверка успешности добавления
         Assert.assertNotNull("ПОСТ НЕ БЫЛ ДОБАВЛЕН В ЗАКЛАДКИ",postWrapper);
-
 
         //открываю заметки
         userMainPage = openMyPage();
@@ -56,6 +56,7 @@ public class DeletePostTest extends TestBase {
         postWrapper.deletePost(driver);
         //открыть закладки
         bookmarkPage = openMark();
+        bookmarkPage.clickOnPostMarks();
 
         //проверка удаления поста из закладок
         postWrapper = bookmarkPage.getPostWrapperByText(message);

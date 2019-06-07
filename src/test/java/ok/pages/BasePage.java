@@ -15,19 +15,12 @@ public abstract class BasePage {
     abstract void check(WebDriver driver);
 
     static WebDriver driver;
-
+//открывает ленту
     public static UserMainPage openMyPage() {
         driver.findElement(MENU).click();
         driver.findElement(MY_PAGE).click();
         return new UserMainPage(driver);
     }
-
-    public static BookmarkPage openMark() {
-        driver.findElement(MENU).click();
-        driver.findElement(MARK).click();
-        return new BookmarkPage(driver);
-    }
-
     public boolean isElementPresent(By by) {
         try {
             this.driver.findElement(by);
@@ -35,6 +28,12 @@ public abstract class BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+    //открыть Закладки
+    public static BookmarkPage openMark() {
+        driver.findElement(MENU).click();
+        driver.findElement(MARK).click();
+        return new BookmarkPage(driver);
     }
 
     public boolean explicitWait(final ExpectedCondition<?> condition, long maxCheckTimeInSeconds, long millisecondsBetweenChecks) {
@@ -66,8 +65,4 @@ public abstract class BasePage {
         Preconditions.checkState(millisecondsBetweenChecks < (maxCheckTimeInSeconds * 1000),
                 "Millis between checks must be less than max seconds to wait");
     }
-
-
-
-
 }

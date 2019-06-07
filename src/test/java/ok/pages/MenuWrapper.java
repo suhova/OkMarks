@@ -20,6 +20,7 @@ public class MenuWrapper {
         cardMenu.click();
     }
 
+    // кликнуть на указанный пункт меню (Группы/Закладки/Друзья)
     public static boolean clickByName(String name, List<MenuWrapper> menu) {
         for(MenuWrapper card: menu){
             if (card.getName().equals(name)) {

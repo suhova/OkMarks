@@ -8,7 +8,6 @@ import org.openqa.selenium.*;
 import static org.junit.Assert.fail;
 
 public class TestBase {
-    private StringBuffer verificationErrors = new StringBuffer();
     protected String baseUrl = "https://ok.ru/";
     protected String login = "technopolisBot206";
     protected String password = "technopolis16";
@@ -54,6 +53,7 @@ public class TestBase {
             acceptNextAlert = true;
         }
     }
+    private StringBuffer verificationErrors = new StringBuffer();
     @After
     public void tearDown() throws Exception {
         driver.quit();

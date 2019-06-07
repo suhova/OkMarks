@@ -41,12 +41,14 @@ public class PostWrapper {
         }
         return null;
     }
+    // Удалить заметку из закладок
     public BookmarkPage deleteMark( WebDriver driver){
         By delete = By.xpath(".//*[@title='Убрать из закладок']");
         Assert.assertTrue("Нет крестика удаления из закладок",isElementPresent(delete, driver));
         cardPost.findElement(delete).click();
         return new BookmarkPage(driver);
     }
+    // Удалить заметку в принципе
     public PostPage deletePost( WebDriver driver){
         By delete = By.xpath(".//*[@class='feed_close']");
         Assert.assertTrue("Нет крестика удаления поста",isElementPresent(delete, driver));
@@ -54,6 +56,7 @@ public class PostWrapper {
         executor.executeScript("arguments[0].click();", cardPost.findElement(delete));
         return new PostPage(driver);
     }
+    // Добавить заметку в закладки
     public PostPage addMark(WebDriver driver){
         Actions actions = new Actions(driver);
 
