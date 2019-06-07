@@ -9,8 +9,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static ok.pages.BasePage.openMark;
-
 public class RemoveGroupFromMarksByGroupPageTest extends TestBase {
     private String groupName;
 
@@ -37,7 +35,7 @@ public class RemoveGroupFromMarksByGroupPageTest extends TestBase {
             groupPage.addMark();
         }
         //открываю закладки
-        BookmarkPage bookmarkPage = openMark();
+        BookmarkPage bookmarkPage = groupPage.openMark();
         Assert.assertFalse("ГРУППА НЕ ДОБАВЛЕНА В ЗАКЛАДКИ",bookmarkPage.isEmptyMarkBlock());
         //ищу группу с нужным названием
         GroupMarkWrapper groupMarkWrapper = bookmarkPage.getGroupMarkWrapper(groupName);
@@ -49,7 +47,7 @@ public class RemoveGroupFromMarksByGroupPageTest extends TestBase {
         groupPage = new GroupPage(driver);
         groupPage.addMark();
         //открываю закладки
-        bookmarkPage = openMark();
+        bookmarkPage = groupPage.openMark();
         bookmarkPage.clickOnGroupMarks();
 
         //проверка (тест не упадёт, если блок закладок пустой, либо если нужной группы нет в закладках)

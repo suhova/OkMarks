@@ -12,9 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static ok.pages.BasePage.openMark;
-import static ok.pages.BasePage.openMyPage;
-
 public class DeletePostTest extends TestBase {
     private  String message;
 
@@ -41,7 +38,7 @@ public class DeletePostTest extends TestBase {
         //добавить этот пост в закладки
         postWrapper.addMark(driver);
         //открыть закладки
-        BookmarkPage bookmarkPage = openMark();
+        BookmarkPage bookmarkPage =postPage.openMark();
         bookmarkPage.clickOnPostMarks();
         postWrapper = bookmarkPage.getPostWrapperByText(message);
 
@@ -49,13 +46,13 @@ public class DeletePostTest extends TestBase {
         Assert.assertNotNull("ПОСТ НЕ БЫЛ ДОБАВЛЕН В ЗАКЛАДКИ",postWrapper);
 
         //открываю заметки
-        userMainPage = openMyPage();
+        userMainPage = bookmarkPage.openMyPage();
         postPage = userMainPage.openPostPage();
         //удаление добавленной заметки
         postWrapper = postPage.getPostWrapperByText(message);
         postWrapper.deletePost(driver);
         //открыть закладки
-        bookmarkPage = openMark();
+        bookmarkPage = postPage.openMark();
         bookmarkPage.clickOnPostMarks();
 
         //проверка удаления поста из закладок

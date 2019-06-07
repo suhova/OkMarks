@@ -1,6 +1,7 @@
 package ok.pages;
 
 import com.google.common.base.Preconditions;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -16,8 +17,10 @@ public abstract class BasePage {
 
     static WebDriver driver;
 //открывает ленту
-    public static UserMainPage openMyPage() {
+    public UserMainPage openMyPage() {
+        Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
         driver.findElement(MENU).click();
+        Assert.assertTrue("Не найдено моей страницы в меню", isElementPresent(MY_PAGE));
         driver.findElement(MY_PAGE).click();
         return new UserMainPage(driver);
     }
@@ -30,8 +33,10 @@ public abstract class BasePage {
         }
     }
     //открыть Закладки
-    public static BookmarkPage openMark() {
+    public BookmarkPage openMark() {
+        Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
         driver.findElement(MENU).click();
+        Assert.assertTrue("Не найдено закладок в меню", isElementPresent(MARK));
         driver.findElement(MARK).click();
         return new BookmarkPage(driver);
     }

@@ -13,9 +13,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static ok.pages.BasePage.openMark;
-import static ok.pages.BasePage.openMyPage;
-
 public class DeletePostFromMarksTest extends TestBase {
     private  String message;
 
@@ -42,7 +39,7 @@ public class DeletePostFromMarksTest extends TestBase {
         //добавить этот пост в закладки
         postWrapper.addMark(driver);
         //открыть закладки
-        BookmarkPage bookMarkPage = openMark();
+        BookmarkPage bookMarkPage = postPage.openMark();
         bookMarkPage.clickOnPostMarks();
         postWrapper = bookMarkPage.getPostWrapperByText(message);
         // проверка успешности добавления
@@ -59,8 +56,9 @@ public class DeletePostFromMarksTest extends TestBase {
 
     @After
     public void deletePost() {
+        driver.get(baseUrl + "/feed");
         //открываю заметки
-        UserMainPage userMainPage = openMyPage();
+        UserMainPage userMainPage = new UserMainPage(driver);
         PostPage postPage = userMainPage.openPostPage();
         //удаление добавленной заметки
         PostWrapper postWrapper = postPage.getPostWrapperByText(message);
