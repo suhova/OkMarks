@@ -1,9 +1,13 @@
-package ok.tests;
+package ok;
 
 import ok.pages.LoginPage;
 import ok.pages.UserMainPage;
 import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
@@ -13,6 +17,11 @@ public class TestBase {
     protected String password = "technopolis16";
     protected WebDriver driver;
     private boolean acceptNextAlert = true;
+    @Before
+    public void setUp() throws Exception {
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    }
 
     protected UserMainPage login(){
         driver.get(baseUrl + "/dk?st.cmd=anonymMain&st.layer.cmd=PopLayerClose");

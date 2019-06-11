@@ -1,5 +1,6 @@
-package ok.pages;
+package ok.pages.group;
 
+import ok.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,9 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 import static ok.pages.CardTransformer.wrapGroup;
-import static ok.pages.GroupWrapper.getGroupByName;
+import static ok.pages.group.GroupWrapper.getGroupByName;
 
-public class GroupsMainPage extends BasePage{
+public class GroupsMainPage extends BasePage {
     private final By MENU_TOP = By.id("mainTopContentRow");
     private final By POPULAR = By.id("hook_Block_PopularGroupsListBlock");
     private final By MENU_LEFT = By.id("hook_Block_UserGroupsCatalogRBlock");
@@ -23,7 +24,7 @@ public class GroupsMainPage extends BasePage{
     }
 
     @Override
-    void check(WebDriver driver) {
+    protected void check(WebDriver driver) {
         Assert.assertTrue("Не дождались блока меню сверху",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_TOP), 10, 500));
 

@@ -13,10 +13,12 @@ public abstract class BasePage {
     private static final By MENU = By.xpath(".//*[@id='hook_Block_ToolbarUserDropdown']//*[@class='toolbar_nav_a js-toolbar-menu']");
     private static final By MARK = By.xpath(".//*[contains(text(),'Закладки')]");
     private static final By MY_PAGE = By.xpath(".//*[@class='nav-side __navigation']//*[contains(text(),'Лента')]");
-    abstract void check(WebDriver driver);
 
-    static WebDriver driver;
-//открывает ленту
+    protected abstract void check(WebDriver driver);
+
+    protected static WebDriver driver;
+
+    //открывает ленту
     public UserMainPage openMyPage() {
         Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
         driver.findElement(MENU).click();
@@ -24,6 +26,7 @@ public abstract class BasePage {
         driver.findElement(MY_PAGE).click();
         return new UserMainPage(driver);
     }
+
     public boolean isElementPresent(By by) {
         try {
             this.driver.findElement(by);
@@ -32,11 +35,30 @@ public abstract class BasePage {
             return false;
         }
     }
+
+    public boolean isElementClickable(By by) {
+        try {
+            this.driver.findElement(by).click();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isElementVisible(By by) {
+        try {
+            if(this.driver.findElement(by).isDisplayed()) return true;
+            else return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     //открыть Закладки
-    public BookmarkPage openMark() {
-        Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
+    public BookmarkPage openBookmark() {
+        Assert.assertTrue("Не найдено меню", isElementVisible(MENU));
         driver.findElement(MENU).click();
-        Assert.assertTrue("Не найдено закладок в меню", isElementPresent(MARK));
+        Assert.assertTrue("Не найдено закладок в меню", isElementVisible(MARK));
         driver.findElement(MARK).click();
         return new BookmarkPage(driver);
     }
@@ -61,7 +83,8 @@ public abstract class BasePage {
                 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             } else {
                 throw new IllegalArgumentException("Driver shouldnt be null");
-            }        }
+            }
+        }
     }
 
     private void checkConditionTimeouts(long maxCheckTimeInSeconds, long millisecondsBetweenChecks) {

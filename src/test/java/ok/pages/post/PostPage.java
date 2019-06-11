@@ -1,5 +1,6 @@
-package ok.pages;
+package ok.pages.post;
 
+import ok.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,9 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 import static ok.pages.CardTransformer.wrapPost;
-import static ok.pages.PostWrapper.getPostByText;
+import static ok.pages.post.PostWrapper.getPostByText;
 
-public class PostPage extends BasePage{
+public class PostPage extends BasePage {
     private final By MENU_TOP = By.id("mainTopContentRow");
     private final By NEW_POST = By.id("hook_Block_PostingForm");
     private final By MENU_LEFT = By.id("hook_Block_MediaTopicDisplayTypeFilter");
@@ -25,7 +26,7 @@ public class PostPage extends BasePage{
     }
 
     @Override
-    void check(WebDriver driver) {
+    protected void check(WebDriver driver) {
         Assert.assertTrue("Не дождались блока меню сверху",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_TOP), 10, 500));
         Assert.assertTrue("Не дождались блока нового поста",
@@ -34,6 +35,8 @@ public class PostPage extends BasePage{
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }
     // Добавить новую заметку
+    // без скрипта
+    // проверять визабилити
     public PostPage addPost(String message){
         Assert.assertTrue("Не найдено поля добавления нового поста", isElementPresent(ADD_POST));
         JavascriptExecutor executor = (JavascriptExecutor)driver;

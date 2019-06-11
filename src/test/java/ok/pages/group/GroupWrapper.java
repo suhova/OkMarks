@@ -1,4 +1,4 @@
-package ok.pages;
+package ok.pages.group;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

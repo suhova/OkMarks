@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
     private final By LOGIN = By.id("field_email");
     private final By ENTER = By.xpath("//form//input[@type='submit']");
     private final By PASSWORD = By.id("field_password");
@@ -16,7 +16,7 @@ public class LoginPage extends BasePage{
     }
 
     @Override
-    void check(WebDriver driver) {
+    protected void check(WebDriver driver) {
         Assert.assertTrue("Не дождались поля пароля",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(PASSWORD), 10, 500));
 
@@ -29,24 +29,24 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage loginEnter(String str) {
-        Assert.assertTrue("Нет поля поиска групп",isElementPresent(LOGIN));
-            driver.findElement(LOGIN).clear();
-            driver.findElement(LOGIN).sendKeys(str);
-            return this;
+        Assert.assertTrue("Нет поля поиска групп", isElementVisible(LOGIN));
+        driver.findElement(LOGIN).clear();
+        driver.findElement(LOGIN).sendKeys(str);
+        return this;
     }
+
     public LoginPage passwordEnter(String str) {
-        Assert.assertTrue("Нет поля поиска групп",isElementPresent(PASSWORD));
-            driver.findElement(PASSWORD).clear();
-            driver.findElement(PASSWORD).sendKeys(str);
-            return this;
+        Assert.assertTrue("Нет поля поиска групп", isElementVisible(PASSWORD));
+        driver.findElement(PASSWORD).clear();
+        driver.findElement(PASSWORD).sendKeys(str);
+        return this;
     }
 
     public UserMainPage clickEnter() {
-        Assert.assertTrue("Нет кнопки входа",isElementPresent(ENTER));
-            driver.findElement(ENTER).click();
-            return new UserMainPage(driver);
+        Assert.assertTrue("Нет кнопки входа", isElementVisible(ENTER));
+        driver.findElement(ENTER).click();
+        return new UserMainPage(driver);
     }
-
 
 
 }
