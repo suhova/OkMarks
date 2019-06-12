@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.List;
 
 import static ok.pages.Helper.isElementPresent;
+import static ok.pages.Helper.isElementVisible;
 
 public class PostWrapper {
 
@@ -19,6 +20,7 @@ public class PostWrapper {
     private final static By TEXT = By.xpath(".//*[@class='media-text_cnt_tx emoji-tx textWrap']");
     private final By MARK = By.xpath(".//*[@class='mlr_top_ac']//*[@class='tico_img ic ic_bookmark-g']");
     private final By CLOSE = By.xpath(".//*[@class='ic media-layer_close_ico']");
+    private final By DELETE = By.xpath(".//*[@class='feed_close']");
 
 
     public PostWrapper(WebElement post) {
@@ -54,10 +56,12 @@ public class PostWrapper {
 
     // Удалить заметку в принципе
     public PostPage deletePost(WebDriver driver) {
-        By delete = By.xpath(".//*[@class='feed_close']");
-        Assert.assertTrue("Нет крестика удаления поста", isElementPresent(delete, driver));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", cardPost.findElement(delete));
+        Assert.assertTrue("Нет крестика удаления поста", isElementPresent(DELETE, driver));
+        Actions action = new Actions(driver);
+        WebElement del = driver.findElement(DELETE);
+        action.moveToElement(del).perform();
+        Assert.assertTrue("Не видно крестика удаления поста", isElementVisible(DELETE, driver));
+        del.click();
         return new PostPage(driver);
     }
 

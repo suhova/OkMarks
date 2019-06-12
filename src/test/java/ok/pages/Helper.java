@@ -13,6 +13,13 @@ public class Helper {
             return false;
         }
     }
-
+    public static boolean isElementVisible(By by, WebDriver driver) {
+        try {
+            if(driver.findElement(by).isDisplayed()) return true;
+            else return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

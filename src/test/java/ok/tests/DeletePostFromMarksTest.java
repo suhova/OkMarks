@@ -24,16 +24,17 @@ public class DeletePostFromMarksTest extends TestBase {
         //логинюсь
         UserMainPage userMainPage = login();
         // добавить пост
-        PostPage postPage = userMainPage.openPostPage().addPost(message);
+        PostPage postPage = userMainPage.openPostPage().deleteAllPosts().addPost(message);
         //добавить этот пост в закладки
         PostWrapper postWrapper = postPage.getPostWrapperByText(message);
         Assert.assertNotNull("Не найдено последней заметки", postWrapper);
         postWrapper.click(driver);
         postPage = postWrapper.addMark(driver);
-        //открыть закладки и найти эту заметку
-        postWrapper = postPage.openBookmark().clickOnPostBookmark().getPostWrapperByText(message);
-        // проверка успешности добавления
-        Assert.assertNotNull("ПОСТ НЕ БЫЛ ДОБАВЛЕН В ЗАКЛАДКИ", postWrapper);
+        //открыть закладки
+        BookmarkPage bookmarkPage = postPage.openBookmark().clickOnPostBookmark();
+        // проверка наличия поста в закладках
+        postWrapper = bookmarkPage.getPostWrapperByText(message);
+        Assert.assertNotNull("ПОСТ НЕ ДОБАВЛЕН В ЗАКЛАДКИ", postWrapper);
     }
 
     /**
@@ -42,12 +43,14 @@ public class DeletePostFromMarksTest extends TestBase {
     @Test
     public void deletePostTest() throws Exception {
         // удаление из закладок
-        BookmarkPage bookMarkPage = new BookmarkPage(driver).getPostWrapperByText(message).deleteMark(driver);
+        BookmarkPage bookmarkPage = new BookmarkPage(driver).getPostWrapperByText(message).deleteMark(driver);
         //обновляю страницу
         driver.navigate().refresh();
+        bookmarkPage = new BookmarkPage(driver);
         //проверка удаления поста из закладок
-        PostWrapper postWrapper = bookMarkPage.getPostWrapperByText(message);
-        Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК", postWrapper);
+        PostWrapper postWrapper = bookmarkPage.getPostWrapperByText(message);
+        Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК",postWrapper);
+
     }
 
     @After

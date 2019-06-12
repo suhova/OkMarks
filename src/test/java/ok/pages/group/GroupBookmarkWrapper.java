@@ -25,7 +25,7 @@ public class GroupBookmarkWrapper {
     }
 
     //вернуть группу по названию
-    public static GroupBookmarkWrapper getMarkByName(String name, List<GroupBookmarkWrapper> marks) {
+    public static GroupBookmarkWrapper getBookmarkByName(String name, List<GroupBookmarkWrapper> marks) {
         for (GroupBookmarkWrapper card : marks) {
             if (card.getName().contains(name)) {
                 return card;

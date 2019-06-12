@@ -36,15 +36,6 @@ public abstract class BasePage {
         }
     }
 
-    public boolean isElementClickable(By by) {
-        try {
-            this.driver.findElement(by).click();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     public boolean isElementVisible(By by) {
         try {
             if(this.driver.findElement(by).isDisplayed()) return true;

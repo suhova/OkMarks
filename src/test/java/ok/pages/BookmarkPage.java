@@ -11,7 +11,7 @@ import java.util.List;
 
 import static ok.pages.CardTransformer.wrapMark;
 import static ok.pages.CardTransformer.wrapPost;
-import static ok.pages.group.GroupBookmarkWrapper.getMarkByName;
+import static ok.pages.group.GroupBookmarkWrapper.getBookmarkByName;
 import static ok.pages.post.PostWrapper.getPostByText;
 
 public class BookmarkPage extends BasePage {
@@ -66,7 +66,7 @@ public class BookmarkPage extends BasePage {
         clickOnGroupBookmark();
         Assert.assertTrue("Нет списка закладок", isElementPresent(MARKS));
         List<GroupBookmarkWrapper> marks = wrapMark(driver.findElements(MARKS));
-        return getMarkByName(groupName, marks);
+        return getBookmarkByName(groupName, marks);
     }
 
     //проверить наличие блока "У вас пока нет заметок"

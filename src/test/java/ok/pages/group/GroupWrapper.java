@@ -1,13 +1,17 @@
 package ok.pages.group;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+import static ok.pages.Helper.isElementVisible;
+
 public class GroupWrapper {
 
+    private final By PHOTO = By.xpath(".//*[@class='photo']");
     private WebElement cardGroup;
 
     public GroupWrapper(WebElement group){
@@ -32,7 +36,8 @@ public class GroupWrapper {
     }
     //открыть группу
     public GroupPage openGroup(WebDriver driver){
-        cardGroup.findElement(By.xpath(".//*[@class='photo']")).click();
+        Assert.assertTrue("Нет фото группы",isElementVisible(PHOTO,driver));
+        cardGroup.findElement(PHOTO).click();
         return new GroupPage(driver);
     }
 

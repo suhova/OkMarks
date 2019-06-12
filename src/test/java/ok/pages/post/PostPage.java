@@ -3,7 +3,6 @@ package ok.pages.post;
 import ok.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -19,6 +18,8 @@ public class PostPage extends BasePage {
     private final By ADD_POST = By.xpath(".//*[@id='hook_Block_PostingForm']//*[@class='pf-head_itx_a']");
     private final By WRITE = By.xpath(".//*[@data-module='postingForm/mediaText']");
     private final By SUBMIT = By.xpath(".//*[@class='posting_f']//*[@class='posting_submit button-pro']");
+    private final By POST_LIST = By.xpath(".//*[@id='hook_Block_UserStatusesMRB']//*[@class='feed']");
+    private final By EMPTY_BLOCK = By.xpath(".//*[@class='stub-empty __statuses ']");
 
     public PostPage(WebDriver driver) {
         super.driver = driver;
@@ -34,24 +35,34 @@ public class PostPage extends BasePage {
         Assert.assertTrue("Не дождались блока меню",
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(MENU_LEFT), 10, 500));
     }
+
     // Добавить новую заметку
-    // без скрипта
-    // проверять визабилити
-    public PostPage addPost(String message){
-        Assert.assertTrue("Не найдено поля добавления нового поста", isElementPresent(ADD_POST));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", driver.findElement(ADD_POST));
-        Assert.assertTrue("Не найдено поля написать заметку", isElementPresent(WRITE));
+    public PostPage addPost(String message) {
+        Assert.assertTrue("Не найдено поля добавления нового поста", isElementVisible(ADD_POST));
+        driver.findElement(ADD_POST).click();
+        Assert.assertTrue("Не найдено поля написать заметку", isElementVisible(WRITE));
         driver.findElement(WRITE).sendKeys(message);
-        Assert.assertTrue("Не найдено кнопки добавления заметки", isElementPresent(SUBMIT));
+        Assert.assertTrue("Не найдено кнопки добавления заметки", isElementVisible(SUBMIT));
         driver.findElement(SUBMIT).click();
         return this;
     }
+
     // Получить заметку по тексту
-    public PostWrapper getPostWrapperByText(String message){
-        By postsBy = By.xpath(".//*[@id='hook_Block_UserStatusesMRB']//*[@class='feed']");
-        Assert.assertTrue("Не найдено списка заметок", isElementPresent(postsBy));
-        List<PostWrapper> posts = wrapPost(driver.findElements(postsBy));
-        return  getPostByText(message,driver, posts);
+    public PostWrapper getPostWrapperByText(String message) {
+        Assert.assertTrue("Не найдено списка заметок", isElementPresent(POST_LIST));
+        List<PostWrapper> posts = wrapPost(driver.findElements(POST_LIST));
+        return getPostByText(message, driver, posts);
+    }
+
+    //удалить все заметки
+    public PostPage deleteAllPosts() {
+        if (isElementVisible(EMPTY_BLOCK)) return this;
+        Assert.assertTrue("Не найдено списка заметок", isElementPresent(POST_LIST));
+        List<PostWrapper> posts = wrapPost(driver.findElements(POST_LIST));
+        for (PostWrapper post : posts) {
+            post.deletePost(driver);
+            driver.navigate().refresh();
+        }
+        return this;
     }
 }
