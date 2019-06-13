@@ -1,37 +1,33 @@
 package ok.tests;
 
 import ok.TestBase;
-import ok.pages.BookmarkPage;
+import ok.pages.bookmark.BookmarkPage;
+import ok.pages.mypage.MyUserPage;
 import ok.pages.post.PostPage;
 import ok.pages.post.PostWrapper;
-import ok.pages.UserMainPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
 
 public class DeletePostFromMarksTest extends TestBase {
     private String message;
 
     @Before
-    public void setUp() throws Exception {
-        super.driver = new ChromeDriver();
+    public void start() throws Exception {
         message = ":)";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //логинюсь
-        UserMainPage userMainPage = login();
+        MyUserPage myUserPage = login();
         // добавить пост
-        PostPage postPage = userMainPage.openPostPage().deleteAllPosts().addPost(message);
+        PostPage postPage = myUserPage.openPostPage().deleteAllPosts().addPost(message);
         //добавить этот пост в закладки
         PostWrapper postWrapper = postPage.getPostWrapperByText(message);
         Assert.assertNotNull("Не найдено последней заметки", postWrapper);
         postWrapper.click(driver);
         postPage = postWrapper.addMark(driver);
         //открыть закладки
-        BookmarkPage bookmarkPage = postPage.openBookmark().clickOnPostBookmark();
+        BookmarkPage bookmarkPage = postPage.openBookmark();
+        bookmarkPage = bookmarkPage.clickOnPostBookmark();
         // проверка наличия поста в закладках
         postWrapper = bookmarkPage.getPostWrapperByText(message);
         Assert.assertNotNull("ПОСТ НЕ ДОБАВЛЕН В ЗАКЛАДКИ", postWrapper);
@@ -43,13 +39,14 @@ public class DeletePostFromMarksTest extends TestBase {
     @Test
     public void deletePostTest() throws Exception {
         // удаление из закладок
-        BookmarkPage bookmarkPage = new BookmarkPage(driver).getPostWrapperByText(message).deleteMark(driver);
+        new BookmarkPage(driver).getPostWrapperByText(message).deleteMark(driver);
         //обновляю страницу
         driver.navigate().refresh();
-        bookmarkPage = new BookmarkPage(driver);
+        BookmarkPage bookmarkPage = new BookmarkPage(driver).clickOnPostBookmark();
         //проверка удаления поста из закладок
+//        Assert.assertTrue("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК",bookmarkPage.isEmptyMarkBlock());
         PostWrapper postWrapper = bookmarkPage.getPostWrapperByText(message);
-        Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК",postWrapper);
+        Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК", postWrapper);
 
     }
 
@@ -57,8 +54,8 @@ public class DeletePostFromMarksTest extends TestBase {
     public void deletePost() {
         driver.get(baseUrl + "/feed");
         //открываю заметки
-        UserMainPage userMainPage = new UserMainPage(driver);
-        PostPage postPage = userMainPage.openPostPage();
+        MyUserPage myUserPage = new MyUserPage(driver);
+        PostPage postPage = myUserPage.openPostPage();
         //удаление добавленной заметки
         PostWrapper postWrapper = postPage.getPostWrapperByText(message);
         postWrapper.deletePost(driver);

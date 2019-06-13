@@ -1,14 +1,12 @@
 package ok.tests;
 
 import ok.TestBase;
-import ok.pages.BookmarkPage;
-import ok.pages.UserMainPage;
+import ok.pages.bookmark.BookmarkPage;
+import ok.pages.mypage.MyUserPage;
 import ok.pages.group.GroupPage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
 
 public class RemoveGroupFromMarksByMarkPageTest extends TestBase {
     private String groupName;
@@ -16,11 +14,10 @@ public class RemoveGroupFromMarksByMarkPageTest extends TestBase {
     @Before
     public void start() throws Exception {
         groupName = "Технополис OK";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //логинюсь
-        UserMainPage userMainPage = login();
+        MyUserPage myUserPage = login();
         // перехожу в группы и открываю группу ТП
-        GroupPage groupPage = userMainPage.openGroupsMainPage().openGroupByName(groupName);
+        GroupPage groupPage = myUserPage.openGroupsMainPage().openGroupByName(groupName);
         //добавляю группу в закладки
         if (groupPage.bookmarkStatus()) {
             groupPage = groupPage.addBookmark();

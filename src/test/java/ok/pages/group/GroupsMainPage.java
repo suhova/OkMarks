@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-import static ok.pages.CardTransformer.wrapGroup;
+import static ok.pages.CardTransformer.wrap;
 import static ok.pages.group.GroupWrapper.getGroupByName;
 
 public class GroupsMainPage extends BasePage {
@@ -38,22 +38,23 @@ public class GroupsMainPage extends BasePage {
                 explicitWait(ExpectedConditions.visibilityOfElementLocated(SEARCH), 10, 500));
     }
 
-    public GroupsMainPage searchGroup (String name) {
-        Assert.assertTrue("Нет поля поиска групп",isElementPresent(SEARCH));
+    public GroupsMainPage searchGroup(String name) {
+        Assert.assertTrue("Нет поля поиска групп", isElementPresent(SEARCH));
         driver.findElement(SEARCH).clear();
         driver.findElement(SEARCH).sendKeys(name);
 
         return this;
     }
+
     //открыть группу с нужным названием
-    public GroupPage openGroupByName(String groupName){
+    public GroupPage openGroupByName(String groupName) {
         //ввод в поиск названия группы
         searchGroup(groupName);
         By GROUPS_BLOCK = By.id("userGroupsSearchResultList");
-        Assert.assertTrue("Нет списка групп",isElementPresent(GROUPS_BLOCK));
-        List<GroupWrapper> groups = wrapGroup(driver.findElements(GROUPS_BLOCK));
-        GroupWrapper groupTP = getGroupByName(groupName,groups);
-        Assert.assertNotNull("Не найдена группа c таким именем",groupTP);
+        Assert.assertTrue("Нет списка групп", isElementPresent(GROUPS_BLOCK));
+        List<GroupWrapper> groups = wrap(driver.findElements(GROUPS_BLOCK), GroupWrapper.class);
+        GroupWrapper groupTP = getGroupByName(groupName, groups);
+        Assert.assertNotNull("Не найдена группа c таким именем", groupTP);
         return groupTP.openGroup(driver);
     }
 }

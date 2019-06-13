@@ -1,6 +1,8 @@
 package ok.pages;
 
 import com.google.common.base.Preconditions;
+import ok.pages.bookmark.BookmarkPage;
+import ok.pages.mypage.MyUserPage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,15 +20,6 @@ public abstract class BasePage {
 
     protected static WebDriver driver;
 
-    //открывает ленту
-    public UserMainPage openMyPage() {
-        Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
-        driver.findElement(MENU).click();
-        Assert.assertTrue("Не найдено моей страницы в меню", isElementPresent(MY_PAGE));
-        driver.findElement(MY_PAGE).click();
-        return new UserMainPage(driver);
-    }
-
     public boolean isElementPresent(By by) {
         try {
             this.driver.findElement(by);
@@ -38,20 +31,10 @@ public abstract class BasePage {
 
     public boolean isElementVisible(By by) {
         try {
-            if(this.driver.findElement(by).isDisplayed()) return true;
-            else return false;
+            return this.driver.findElement(by).isDisplayed();
         } catch (Exception e) {
             return false;
         }
-    }
-
-    //открыть Закладки
-    public BookmarkPage openBookmark() {
-        Assert.assertTrue("Не найдено меню", isElementVisible(MENU));
-        driver.findElement(MENU).click();
-        Assert.assertTrue("Не найдено закладок в меню", isElementVisible(MARK));
-        driver.findElement(MARK).click();
-        return new BookmarkPage(driver);
     }
 
     public boolean explicitWait(final ExpectedCondition<?> condition, long maxCheckTimeInSeconds, long millisecondsBetweenChecks) {
@@ -83,5 +66,23 @@ public abstract class BasePage {
         Preconditions.checkState(millisecondsBetweenChecks > 0, "milliseconds count between checks must be not 0");
         Preconditions.checkState(millisecondsBetweenChecks < (maxCheckTimeInSeconds * 1000),
                 "Millis between checks must be less than max seconds to wait");
+    }
+
+    //открывает ленту
+    public MyUserPage openMyPage() {
+        Assert.assertTrue("Не найдено меню", isElementPresent(MENU));
+        driver.findElement(MENU).click();
+        Assert.assertTrue("Не найдено моей страницы в меню", isElementPresent(MY_PAGE));
+        driver.findElement(MY_PAGE).click();
+        return new MyUserPage(driver);
+    }
+
+    //открыть Закладки
+    public BookmarkPage openBookmark() {
+        Assert.assertTrue("Не найдено меню", isElementVisible(MENU));
+        driver.findElement(MENU).click();
+        Assert.assertTrue("Не найдено закладок в меню", isElementVisible(MARK));
+        driver.findElement(MARK).click();
+        return new BookmarkPage(driver);
     }
 }

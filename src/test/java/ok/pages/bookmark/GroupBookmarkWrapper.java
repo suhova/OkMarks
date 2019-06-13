@@ -1,6 +1,6 @@
-package ok.pages.group;
+package ok.pages.bookmark;
 
-import ok.pages.BookmarkPage;
+import ok.pages.group.GroupPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +25,7 @@ public class GroupBookmarkWrapper {
     }
 
     //вернуть группу по названию
-    public static GroupBookmarkWrapper getBookmarkByName(String name, List<GroupBookmarkWrapper> marks) {
+    public static GroupBookmarkWrapper getGroupBookmarkByName(String name, List<GroupBookmarkWrapper> marks) {
         for (GroupBookmarkWrapper card : marks) {
             if (card.getName().contains(name)) {
                 return card;

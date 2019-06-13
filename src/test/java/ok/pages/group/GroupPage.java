@@ -15,7 +15,7 @@ public class GroupPage extends BasePage {
 
 
     public GroupPage(WebDriver driver) {
-        super.driver = driver;
+        BasePage.driver = driver;
         check(driver);
     }
 
@@ -35,18 +35,16 @@ public class GroupPage extends BasePage {
 
     //добавить группу в заметки
     public GroupPage addBookmark() {
-        Assert.assertTrue("Нет поля добавления в закладки",isElementPresent(BOOKMARK));
+        Assert.assertTrue("Нет поля добавления в закладки", isElementPresent(BOOKMARK));
         driver.findElement(BOOKMARK).click();
         return this;
     }
+
     // проверить находится ли группа в закладках
     public boolean bookmarkStatus() {
-        Assert.assertTrue("Нет поля добавления в закладки",isElementPresent(BOOKMARK));
+        Assert.assertTrue("Нет поля добавления в закладки", isElementPresent(BOOKMARK));
         String status = driver.findElement(BOOKMARK).getText();
-            if (status.equals("В закладки")){
-                return true;
-            }
-        return false;
+        return status.equals("В закладки");
     }
 
 }

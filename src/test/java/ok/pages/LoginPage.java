@@ -1,5 +1,6 @@
 package ok.pages;
 
+import ok.pages.mypage.MyUserPage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -42,10 +43,10 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public UserMainPage clickEnter() {
+    public MyUserPage clickEnter() {
         Assert.assertTrue("Нет кнопки входа", isElementVisible(ENTER));
         driver.findElement(ENTER).click();
-        return new UserMainPage(driver);
+        return new MyUserPage(driver);
     }
 
 

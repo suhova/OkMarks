@@ -1,5 +1,6 @@
-package ok.pages;
+package ok.pages.mypage;
 
+import ok.pages.BasePage;
 import ok.pages.group.GroupsMainPage;
 import ok.pages.post.PostPage;
 import org.junit.Assert;
@@ -9,16 +10,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-import static ok.pages.CardTransformer.wrapMenu;
+import static ok.pages.CardTransformer.wrap;
 
-public class UserMainPage extends BasePage {
+public class MyUserPage extends BasePage {
     private final By NAVIGATION_TOOLBAR = By.xpath("//*[@class='toolbar_c']");
     private final By MAIN_CONTENT = By.id("hook_Block_UserMainFullMRB");
     private final By MENU_LEFT = By.id("hook_Block_SideNavigation");
     private final By AVATAR = By.id("hook_Block_Avatar");
     private final By MENU = By.xpath(".//*[@id='hook_Block_Navigation']//*[@class='nav-side_i  __with-ic']");
 
-    public UserMainPage(WebDriver driver) {
+    public MyUserPage(WebDriver driver) {
         super.driver = driver;
         check(driver);
     }
@@ -37,14 +38,14 @@ public class UserMainPage extends BasePage {
 
     // Открыть закладки
     public PostPage openPostPage() {
-        List<MenuWrapper> menu = wrapMenu(driver.findElements(MENU));
+        List<MenuWrapper> menu = wrap(driver.findElements(MENU), MenuWrapper.class);
         Assert.assertTrue("Нет такого элемента меню", clickByName("Заметки", menu));
         return new PostPage(driver);
     }
 
     // Открыть группы
     public GroupsMainPage openGroupsMainPage() {
-        List<MenuWrapper> menu = wrapMenu(driver.findElements(MENU));
+        List<MenuWrapper> menu = wrap(driver.findElements(MENU), MenuWrapper.class);
         Assert.assertTrue("Нет такого элемента меню", clickByName("Группы", menu));
         return new GroupsMainPage(driver);
     }

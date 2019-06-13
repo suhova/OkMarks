@@ -1,7 +1,9 @@
 package ok.pages;
 
-import ok.pages.group.GroupBookmarkWrapper;
+import ok.pages.bookmark.GroupBookmarkWrapper;
+import ok.pages.bookmark.UserBookmarkWrapper;
 import ok.pages.group.GroupWrapper;
+import ok.pages.mypage.MenuWrapper;
 import ok.pages.post.PostWrapper;
 import org.openqa.selenium.WebElement;
 
@@ -15,49 +17,43 @@ public class CardTransformer {
 
     ;
 
-    // что-нибудь придумать)))))))))00)
-    public static List<MenuWrapper> wrapMenu(List<WebElement> elements) {
+    public static <G> List<G> wrap(List<WebElement> elements, Class<G> name) {
         if (elements.isEmpty()) {
             return Collections.emptyList();
         }
-        List<MenuWrapper> cardMenu = new ArrayList<>();
-        for (WebElement card : elements) {
-            cardMenu.add(new MenuWrapper(card));
+        List<G> list = new ArrayList<>();
+        switch (name.getSimpleName()) {
+            case "GroupWrapper":
+                for (WebElement card : elements) {
+                    list.add(name.cast(new GroupWrapper(card)));
+                }
+                break;
+            case "GroupBookmarkWrapper":
+                for (WebElement card : elements) {
+                    list.add(name.cast(new GroupBookmarkWrapper(card)));
+                }
+                break;
+            case "MenuWrapper":
+                for (WebElement card : elements) {
+                    list.add(name.cast(new MenuWrapper(card)));
+                }
+                break;
+            case "PostWrapper":
+                for (WebElement card : elements) {
+                    list.add(name.cast(new PostWrapper(card)));
+                }
+                break;
+            case "UserBookmarkWrapper":
+                for (WebElement card : elements) {
+                    list.add(name.cast(new UserBookmarkWrapper(card)));
+                }
+                break;
+            default: {
+                System.out.println("Класс не прописан в трансформере: " + name.getSimpleName());
+            }
+            break;
         }
-        return cardMenu;
-    }
-
-    public static List<GroupBookmarkWrapper> wrapMark(List<WebElement> elements) {
-        if (elements.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<GroupBookmarkWrapper> cardMark = new ArrayList<>();
-        for (WebElement card : elements) {
-            cardMark.add(new GroupBookmarkWrapper(card));
-        }
-        return cardMark;
-    }
-
-    public static List<GroupWrapper> wrapGroup(List<WebElement> elements) {
-        if (elements.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<GroupWrapper> cardGroup = new ArrayList<>();
-        for (WebElement card : elements) {
-            cardGroup.add(new GroupWrapper(card));
-        }
-        return cardGroup;
-    }
-
-    public static List<PostWrapper> wrapPost(List<WebElement> elements) {
-        if (elements.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<PostWrapper> cardPost = new ArrayList<>();
-        for (WebElement card : elements) {
-            cardPost.add(new PostWrapper(card));
-        }
-        return cardPost;
+        return list;
     }
 
 }

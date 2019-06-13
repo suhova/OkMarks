@@ -1,6 +1,6 @@
 package ok.pages.post;
 
-import ok.pages.BookmarkPage;
+import ok.pages.bookmark.BookmarkPage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

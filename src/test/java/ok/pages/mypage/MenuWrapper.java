@@ -1,11 +1,12 @@
-package ok.pages;
+package ok.pages.mypage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class MenuWrapper{
+public class MenuWrapper {
 
     private WebElement cardMenu;
+
     public MenuWrapper(WebElement cardMenu) {
         this.cardMenu = cardMenu;
     }
