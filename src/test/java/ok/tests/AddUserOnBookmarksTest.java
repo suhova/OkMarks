@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AddUserOnBookmarks extends TestBase {
+public class AddUserOnBookmarksTest extends TestBase {
 
     private String userUrl;
 
@@ -36,6 +36,7 @@ public class AddUserOnBookmarks extends TestBase {
         //открываю страницу юзера
         driver.get(baseUrl + userUrl);
         String buttonText = new UserPage(driver).getTextFromButtonAddOnBookmarks();
+//имеет смысл слова "Убрать из закладок" хранить в пейдже UserPage => проверку делать там же, возвращать boolean
         Assert.assertTrue("ТЕКСТ НА КНОПКЕ НЕКОРРЕКТНЫЙ", buttonText.contains("Убрать из закладок"));
     }
 

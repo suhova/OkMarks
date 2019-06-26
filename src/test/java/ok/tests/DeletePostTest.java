@@ -25,7 +25,8 @@ public class DeletePostTest extends TestBase {
         postWrapper.click(driver);
         postPage = postWrapper.addMark(driver);
         //открыть закладки
-        BookmarkPage bookmarkPage = postPage.openBookmark().clickOnPostBookmark();
+        BookmarkPage bookmarkPage = postPage.openBookmark();
+        bookmarkPage = bookmarkPage.clickOnPostBookmark();
         // проверка наличия поста в закладках
         postWrapper = bookmarkPage.getPostWrapperByText(message);
         Assert.assertNotNull("ПОСТ НЕ ДОБАВЛЕН В ЗАКЛАДКИ", postWrapper);

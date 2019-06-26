@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GroupPage extends BasePage {
     private final By NAVIGATION_TOOLBAR = By.xpath("//*[@class='toolbar_c']");
+    // ЭТО ОЧЕН-ОЧЕНЬ ПЛОХО)))0)
     private final By BOOKMARK = By.id("hook_Block_inplrmbm_TopCard_53245288710321_4");
     private final By HEADER = By.id("hook_Block_MainContentHeader");
     private final By GROUP_MENU = By.id("hook_Block_AltGroupMainMenu");

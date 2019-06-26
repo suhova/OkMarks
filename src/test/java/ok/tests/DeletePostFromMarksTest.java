@@ -44,12 +44,12 @@ public class DeletePostFromMarksTest extends TestBase {
         driver.navigate().refresh();
         BookmarkPage bookmarkPage = new BookmarkPage(driver).clickOnPostBookmark();
         //проверка удаления поста из закладок
-//        Assert.assertTrue("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК",bookmarkPage.isEmptyMarkBlock());
-        PostWrapper postWrapper = bookmarkPage.getPostWrapperByText(message);
-        Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК", postWrapper);
-
+        if (!bookmarkPage.isEmptyMarkBlock()) {
+            PostWrapper postWrapper = bookmarkPage.getPostWrapperByText(message);
+            Assert.assertNull("ПОСТ НЕ БЫЛ УДАЛЁН ИЗ ЗАКЛАДОК", postWrapper);
+        }
     }
-
+    // если заметка вообще не была добавлена, будет заглушка => добавить проверку на наличие заглушки
     @After
     public void deletePost() {
         driver.get(baseUrl + "/feed");
@@ -57,8 +57,10 @@ public class DeletePostFromMarksTest extends TestBase {
         MyUserPage myUserPage = new MyUserPage(driver);
         PostPage postPage = myUserPage.openPostPage();
         //удаление добавленной заметки
-        PostWrapper postWrapper = postPage.getPostWrapperByText(message);
-        postWrapper.deletePost(driver);
+        if(!postPage.isEmptyBlock()) {   //#добавлено
+            PostWrapper postWrapper = postPage.getPostWrapperByText(message);
+            postWrapper.deletePost(driver);
+        }
     }
 
 }

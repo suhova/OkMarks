@@ -17,7 +17,7 @@ public class CardTransformer {
 
     ;
 
-    public static <G> List<G> wrap(List<WebElement> elements, Class<G> name) {
+    public static <G> List<G> wrapFirstVersion(List<WebElement> elements, Class<G> name) {
         if (elements.isEmpty()) {
             return Collections.emptyList();
         }
@@ -56,4 +56,35 @@ public class CardTransformer {
         return list;
     }
 
+
+    public static <G> List<G> wrap(List<WebElement> elements, Class<G> name) {
+        if (elements.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<G> list = new ArrayList<>();
+
+        if (GroupWrapper.class.isAssignableFrom(name)){
+            for (WebElement card : elements) {
+                list.add(name.cast(new GroupWrapper(card)));
+            }
+        } else if (GroupBookmarkWrapper.class.isAssignableFrom(name)){
+            for (WebElement card : elements) {
+                list.add(name.cast(new GroupBookmarkWrapper(card)));
+            }
+        } else if (MenuWrapper.class.isAssignableFrom(name)){
+            for (WebElement card : elements) {
+                list.add(name.cast(new MenuWrapper(card)));
+            }
+        } else if (PostWrapper.class.isAssignableFrom(name)){
+            for (WebElement card : elements) {
+                list.add(name.cast(new PostWrapper(card)));
+            }
+        } else if (UserBookmarkWrapper.class.isAssignableFrom(name)){
+            for (WebElement card : elements) {
+                list.add(name.cast(new UserBookmarkWrapper(card)));
+            }
+        } else System.out.println("Класс не прописан в трансформере: " + name.getSimpleName());
+
+        return list;
+    }
 }

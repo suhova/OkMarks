@@ -56,7 +56,7 @@ public class BookmarkPage extends BasePage {
         return new BookmarkPage(driver);
     }
 
-    //в заметках кликнуть на заметки Групп
+    //в заметках кликнуть на заметки юзеров
     public BookmarkPage clickOnUserBookmark() {
         Assert.assertTrue("Не найдено поля меню Люди", isElementVisible(USERS));
         driver.findElement(USERS).click();
@@ -88,7 +88,7 @@ public class BookmarkPage extends BasePage {
     //проверить наличие блока "У вас пока нет заметок"
     public boolean isEmptyMarkBlock() {
         By emptyMarksBlock = By.xpath(".//*[@class='stub-empty __bookmarks ']");
-        return isElementPresent(emptyMarksBlock);
+        return isElementVisible(emptyMarksBlock);
     }
 
 }

@@ -58,13 +58,29 @@ public class PostPage extends BasePage {
 
     //удалить все заметки
     public PostPage deleteAllPosts() {
-        if (isElementVisible(EMPTY_BLOCK)) return this;
-        Assert.assertTrue("Не найдено списка заметок", isElementPresent(POST_LIST));
-        List<PostWrapper> posts = wrap(driver.findElements(POST_LIST), PostWrapper.class);
-        for (PostWrapper post : posts) {
-            post.deletePost(driver);
-            driver.navigate().refresh();
+//        if (isElementVisible(EMPTY_BLOCK)) return this;
+//        Assert.assertTrue("Не найдено списка заметок", isElementPresent(POST_LIST));
+//        List<PostWrapper> posts = wrap(driver.findElements(POST_LIST), PostWrapper.class);
+//        for (PostWrapper post : posts) {
+//            post.deletePost(driver);
+//            driver.navigate().refresh();
+//        }
+//        return this;
+
+
+        // вынести заглушку
+        if (!isElementVisible(EMPTY_BLOCK)) {
+            Assert.assertTrue("Не найдено списка заметок", isElementPresent(POST_LIST));
+            List<PostWrapper> posts = wrap(driver.findElements(POST_LIST), PostWrapper.class);
+            for (PostWrapper post : posts) {
+                post.deletePost(driver);
+                driver.navigate().refresh();
+            }
         }
         return this;
+    }
+
+    public boolean isEmptyBlock(){
+        return isElementVisible(EMPTY_BLOCK);
     }
 }

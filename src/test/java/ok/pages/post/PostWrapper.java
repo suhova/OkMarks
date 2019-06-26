@@ -38,7 +38,6 @@ public class PostWrapper {
 
     public static PostWrapper getPostByText(String message, WebDriver driver, List<PostWrapper> posts) {
         for (PostWrapper card : posts) {
-            //     if(!) return null;
             if (isElementPresent(TEXT, driver) && card.getMessage().contains(message)) {
                 return card;
             }
@@ -69,12 +68,13 @@ public class PostWrapper {
     public PostPage addMark(WebDriver driver) {
         Actions actions = new Actions(driver);
 
-        Assert.assertTrue("Нет стрелочки для добавления в закладки", isElementPresent(ARROW, driver));
+        Assert.assertTrue("Нет стрелочки для добавления в закладки", isElementVisible(ARROW, driver));
         actions.moveToElement(driver.findElement(ARROW));
 
         Assert.assertTrue("Нет добавления в закладки", isElementPresent(MARK, driver));
         WebElement element = driver.findElement(MARK);
-
+//        element.click();
+// Без скрипта не получилось((((((((99(9
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
 
